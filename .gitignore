@@ -28,3 +28,6 @@ effective-settings.xml
 *.lck
 */dependency-reduced-pom.xml
 node_modules
+
+# macOS
+**/.DS_Store
