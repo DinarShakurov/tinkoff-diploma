@@ -1,0 +1,11 @@
+first_name,last_name,patronymic,document_number,vaccination_date,vaccine_name,vaccination_point_name,vaccination_point_number,vaccine_number,city,address
+Karly,Quent,Delp,9949805392,1919-07-15,vaccine#1,Point_#3,PointNumber_Point_#3,14152,City_Point_#3,Address_Point_#3
+Dinar,Shakurov,Ilgizovich,6128057548,2020-05-21,vaccine#3,Point_#3,PointNumber_Point_#3,487710,City_Point_#3,Address_Point_#3
+Caryl,Bohlin,Othilia,9716224470,1919-08-11,vaccine#2,Point_#3,PointNumber_Point_#3,263818,City_Point_#3,Address_Point_#3
+Tina,Grobe,Berard,4314039002,2020-02-29,vaccine#3,Point_#1,PointNumber_Point_#1,346696,City_Point_#1,Address_Point_#1
+Annecorinne,Abram,Salvidor,2057713460,2121-03-08,vaccine#2,Point_#1,PointNumber_Point_#1,287012,City_Point_#1,Address_Point_#1
+Renie,Bollay,Valoniah,8356139914,2121-01-17,vaccine#2,Point_#3,PointNumber_Point_#3,393607,City_Point_#3,Address_Point_#3
+Georgetta,Sholley,Doig,5335274184,2121-03-14,vaccine#3,Point_#2,PointNumber_Point_#2,571126,City_Point_#2,Address_Point_#2
+Yvonne,Lumbard,Toor,5494027204,2020-09-25,vaccine#2,Point_#1,PointNumber_Point_#1,623424,City_Point_#1,Address_Point_#1
+Carlie,Moina,Santoro,1153042732,2020-02-18,vaccine#2,Point_#3,PointNumber_Point_#3,791211,City_Point_#3,Address_Point_#3
+Shannah,Bethany,Constancy,7688525187,2020-02-03,vaccine#2,Point_#1,PointNumber_Point_#1,898095,,Address_Point_#1

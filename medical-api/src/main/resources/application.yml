@@ -1,0 +1,117 @@
+medical-service:
+  exception.print-stack-trace: true
+  config:
+    enable-scheduling: true
+    new-vaccination-fixed-delay: 15000
+    kafka:
+      server: ${KAFKA_SERVER:localhost:29092}
+      acks-config: 1
+      generate-qr-code-topic: generateQrCodeTopic
+      generate-qr-code-topic-num-partitions: 1
+      generate-qr-code-topic-replication-factor: 1
+
+
+server:
+  port: 0
+  servlet:
+    context-path: /medical-service
+
+spring:
+  application:
+    name: medical-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/tinkoff_hw_db}
+    username: ${POSTGRES_USERNAME:tfuser}
+    password: ${POSTGRES_USERNAME:tfuser}
+  jpa:
+    hibernate.ddl-auto: none
+    properties:
+      hibernate:
+        jdbc.batch_size: 10
+        default_schema: medical_service
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        generate_statistics: false
+        format_sql: true
+        order_updates: true
+        order_inserts: true
+    open-in-view: false
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    default-schema: medical_service
+  task:
+    scheduling.pool.size: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+feign:
+  circuitbreaker:
+    enabled: true
+  client:
+    config:
+      default:
+        logger-level: full
+        connect-timeout: 5000
+        read-timeout: 5000
+
+resilience4j:
+  circuitbreaker:
+    circuit-breaker-aspect-order: 1
+    configs:
+      default:
+        wait-duration-in-open-state: 1m
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 5
+        sliding-window-type: count_based
+        minimum-number-of-calls: 5
+        slow-call-duration-threshold: 10s
+        slow-call-rate-threshold: 60
+        failure-rate-threshold: 60
+    instances:
+      person-service:
+        base-config: default
+  retry:
+    retry-aspect-order: 2
+    configs:
+      default:
+        wait-duration: 1s
+        max-attempts: 3
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+    instances:
+      person-service:
+        base-config: default
+
+logging:
+  level:
+    org.apache.kafka: debug
+    ru.tfs.spring.hw.medical_service: debug
+    org.hibernate:
+      SQL: debug
+      type.descriptor.sql.BasicBinder: TRACE
+
+
+---
+
+spring:
+  config.activate.on-profile: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${TEST_POSTGRES_URL:jdbc:postgresql://localhost:5432/test_tinkoff_hw_db}
+    username: ${TEST_POSTGRES_USERNAME:tfuser}
+    password: ${TEST_POSTGRES_USERNAME:tfuser}
+
+medical-service:
+  config:
+    enable-scheduling: false

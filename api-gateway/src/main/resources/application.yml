@@ -1,0 +1,51 @@
+server.port: 9999
+
+spring:
+  application.name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: person-service
+          uri: lb://person-service
+          predicates:
+            - Path=/api/v1/person/**
+          filters:
+            - RewritePath=/api/v1/person/(?<path>.*), /person-service/api/public/$\{path}
+        - id: medical-service
+          uri: lb://medical-service
+          predicates:
+            - Path=/api/v1/medical/**
+          filters:
+            - RewritePath=/api/v1/medical/(?<path>.*), /medical-service/api/public/$\{path}
+        - id: qr-storage-service
+          uri: lb://qr-storage-service
+          predicates:
+            - Path=/api/v1/qr/**
+          filters:
+            - RewritePath=/api/v1/qr/(?<path>.*), /qr-storage-service/api/public/$\{path}
+      metrics:
+        enabled: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

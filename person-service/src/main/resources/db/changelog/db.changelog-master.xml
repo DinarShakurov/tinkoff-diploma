@@ -1,0 +1,16 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <preConditions onFailMessage="You are not running on supported dbms: [PostgreSQL]">
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <include file="0.0.1-region_create.sql" relativeToChangelogFile="true"/>
+    <include file="0.0.2-region_insert.sql" relativeToChangelogFile="true"/>
+    <include file="0.0.3-address_create.sql" relativeToChangelogFile="true"/>
+    <include file="0.0.4-person_create.sql" relativeToChangelogFile="true"/>
+    <include file="0.0.5-contact_create.sql" relativeToChangelogFile="true"/>
+    <include file="0.0.6-identity-document_create.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
